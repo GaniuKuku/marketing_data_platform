@@ -32,9 +32,9 @@ jobs:
           # These map directly to your profiles.yml environment variable names!
           CI_CATALOG: workspace
           CI_SCHEMA: marketing_ci
-          CI_HOST: ${{ secrets.DB_HOST }}
-          CI_HTTP_PATH: ${{ secrets.DB_CI_HTTP_PATH }}
-          CI_CLIENT_ID: ${{ secrets.DB_CI_CLIENT_ID }}
-          CI_CLIENT_SECRET: ${{ secrets.DB_CI_CLIENT_SECRET }}
+          CI_HOST: ${{ secrets.CI_HOST }}
+          CI_HTTP_PATH: ${{ secrets.CI_HTTP_PATH }}
+          CI_CLIENT_ID: ${{ secrets.CI_CLIENT_ID }}
+          CI_CLIENT_SECRET: ${{ secrets.CI_CLIENT_SECRET }}
         run: |
           dbt build --select staging --target ci
