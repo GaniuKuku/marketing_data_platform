@@ -1,0 +1,30 @@
+marketing_data_platform:
+  target: prod
+  outputs:
+    dev:
+      type: databricks
+      catalog: "{{ env_var('DEV_CATALOG') }}"
+      schema: "{{ env_var('DEV_SCHEMA') }}"
+      host: "{{ env_var('HOST') }}"
+      http_path: "{{ env_var('DEV_HTTP_PATH') }}"
+      token: "{{ env_var('DATABRICKS_PAT_TOKEN') }}"
+
+    ci:
+      type: databricks
+      catalog: "{{ env_var('CI_CATALOG') }}"
+      schema: "{{ env_var('CI_SCHEMA') }}"
+      host: "{{ env_var('CI_HOST') }}"
+      http_path: "{{ env_var('CI_HTTP_PATH') }}"
+      auth_type: oauth
+      client_id: "{{ env_var('CI_CLIENT_ID') }}"
+      client_secret: "{{ env_var('CI_CLIENT_SECRET') }}"
+
+    prod: 
+      type: databricks
+      catalog: "{{ env_var('PROD_CATALOG') }}"
+      schema: "{{ env_var('PROD_SCHEMA') }}"
+      host: "{{ env_var('PROD_HOST') }}"
+      http_path: "{{ env_var('PROD_HTTP_PATH') }}"
+      auth_type: oauth
+      client_id: "{{ env_var('PROD_CLIENT_ID') }}"
+      client_secret: "{{ env_var('PROD_CLIENT_SECRET') }}"

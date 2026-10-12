@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: marketing_raw
+    description: "Raw advertising performance data in Databricks Unity Catalog."
+    catalog: workspace
+    schema: raw
+    tables:
+      - name: facebook_ads_raw
+        description: "The table contains raw data related to Facebook advertising accounts and campaigns. 
+                  It includes details such as account information, ad performance metrics (like spend, impressions, and clicks), 
+                  and timestamps for account and ad updates."
+      - name: snapchat_ads_raw
+        description: "The table contains data related to Snapchat ads, 
+                      including details such as ad identifiers, campaign information, spending, impressions, 
+                      and engagement metrics."

@@ -1,0 +1,11 @@
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+dbt_modules/
+logs/
+EOF
+# Environment credentials
+.env
+.env.*
+venv/
