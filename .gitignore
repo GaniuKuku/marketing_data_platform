@@ -9,3 +9,5 @@ EOF
 .env
 .env.*
 venv/
+.user.*
+/*
