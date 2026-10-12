@@ -1,0 +1,40 @@
+name: Continuous Integration Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'models/**'
+      - 'dbt_project.yml'
+      - 'packages.yml'
+
+jobs:
+  dbt_ci_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install dbt-databricks elementary-data
+          dbt deps
+
+      - name: Run CI Build & Test
+        env:
+          # These map directly to your profiles.yml environment variable names!
+          CI_CATALOG: workspace
+          CI_SCHEMA: marketing_ci
+          CI_HOST: ${{ secrets.CI_HOST }}
+          CI_HTTP_PATH: ${{ secrets.CI_HTTP_PATH }}
+          CI_CLIENT_ID: ${{ secrets.CI_CLIENT_ID }}
+          CI_CLIENT_SECRET: ${{ secrets.CI_CLIENT_SECRET }}
+        run: |
+          dbt build --select staging --target ci

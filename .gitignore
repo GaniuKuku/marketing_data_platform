@@ -9,5 +9,10 @@ EOF
 .env
 .env.*
 venv/
+<<<<<<< HEAD
 .user.*
 /*
+=======
+.user.yml
+package-lock.yml
+>>>>>>> ad98335ca1e4fe42de89befb619b08a88b8e296b

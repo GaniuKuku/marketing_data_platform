@@ -1,5 +1,5 @@
 marketing_data_platform:
-  target: prod
+  target: dev
   outputs:
     dev:
       type: databricks
