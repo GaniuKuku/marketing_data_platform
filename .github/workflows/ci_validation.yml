@@ -36,8 +36,8 @@ jobs:
           CI_SCHEMA: ${{ vars.CI_SCHEMA }}
           CI_HOST: ${{ vars.CI_HOST }}
           CI_HTTP_PATH: ${{ vars.CI_HTTP_PATH }}
-          CI_CLIENT_ID: ${{ secrets.DB_CI_CLIENT_ID }}
-          CI_CLIENT_SECRET: ${{ secrets.DB_CI_CLIENT_SECRET }}
+          CI_CLIENT_ID: ${{ secrets.CI_CLIENT_ID }}
+          CI_CLIENT_SECRET: ${{ secrets.CI_CLIENT_SECRET }}
         run: |
           dbt build --exclude elementary --target ci
           dbt build --target ci
