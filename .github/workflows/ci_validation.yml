@@ -6,8 +6,10 @@ on:
       - main
     paths:
       - 'models/**'
+      - 'tests/**'
       - 'dbt_project.yml'
       - 'packages.yml'
+      - '.github/workflows/**'
 
 jobs:
   dbt_ci_run:
@@ -29,12 +31,13 @@ jobs:
 
       - name: Run CI Build & Test
         env:
-          # These map directly to your profiles.yml environment variable names!
-          CI_CATALOG: workspace
-          CI_SCHEMA: marketing_ci
-          CI_HOST: ${{ secrets.CI_HOST }}
-          CI_HTTP_PATH: ${{ secrets.CI_HTTP_PATH }}
+          DBT_PROFILES_DIR: .
+          CI_CATALOG: ${{ vars.CI_CATALOG }}
+          CI_SCHEMA: ${{ vars.CI_SCHEMA }}
+          CI_HOST: ${{ vars.CI_HOST }}
+          CI_HTTP_PATH: ${{ vars.CI_HTTP_PATH }}
           CI_CLIENT_ID: ${{ secrets.CI_CLIENT_ID }}
           CI_CLIENT_SECRET: ${{ secrets.CI_CLIENT_SECRET }}
         run: |
-          dbt build --select staging --target ci
+          dbt build --exclude elementary --target ci
+          dbt build --target ci

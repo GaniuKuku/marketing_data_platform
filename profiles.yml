@@ -18,7 +18,7 @@ marketing_data_platform:
       auth_type: oauth
       client_id: "{{ env_var('CI_CLIENT_ID') }}"
       client_secret: "{{ env_var('CI_CLIENT_SECRET') }}"
-
+      thread: 4
     prod: 
       type: databricks
       catalog: "{{ env_var('PROD_CATALOG') }}"
