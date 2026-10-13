@@ -1,0 +1,42 @@
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'models/**'
+      - 'tests/**'
+      - 'dbt_project.yml'
+      - 'packages.yml'
+      - '.github/workflows/**'
+
+jobs:
+  dbt_prod_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install dbt-databricks elementary-data
+          dbt deps
+
+      - name: Run Production Build
+        env:
+          DBT_PROFILES_DIR: .
+          PROD_CATALOG: ${{ vars.PROD_CATALOG }}
+          PROD_SCHEMA: ${{ vars.PROD_SCHEMA }}
+          PROD_HOST: ${{ vars.PROD_HOST }}
+          PROD_HTTP_PATH: ${{ vars.PROD_HTTP_PATH }}
+          PROD_CLIENT_ID: ${{ secrets.PROD_CLIENT_ID }}
+          PROD_CLIENT_SECRET: ${{ secrets.PROD_CLIENT_SECRET }}
+        run: |
+          dbt build --exclude elementary --target prod

@@ -3,16 +3,16 @@ target/
 dbt_packages/
 logs/
 dbt_modules/
-logs/
-EOF
+
 # Environment credentials
 .env
 .env.*
+
+# Python virtual environment
 venv/
-<<<<<<< HEAD
-.user.*
-/*
-=======
+
+# Local developer settings & lock files
 .user.yml
+.user.*
 package-lock.yml
->>>>>>> ad98335ca1e4fe42de89befb619b08a88b8e296b
+
