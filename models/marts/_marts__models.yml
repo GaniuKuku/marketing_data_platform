@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: fct_campaign_daily_performance
+    description: >
+      Unified marketing performance fact table aggregated at the campaign-day grain.
+      Combines both Facebook and Snapchat channels to support downstream analytics, 
+      BI tools, and AI agents for cross-platform efficiency analysis.
+      Grain: One row per date_day, per platform, per campaign_id.
+    columns:
+      - name: campaign_daily_id
+        description: "Primary key: Unique cryptographic identifier generated from date_day, platform, and campaign_id."
+        tests:
+          - unique
+          - not_null
+      
+      - name: date_day
+        description: "The calendar date of the aggregated performance metrics."
+        tests:
+          - not_null
+
+      - name: platform
+        description: "Normalized advertising platform identifier ('facebook' or 'snapchat')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['facebook', 'snapchat']
+
+      - name: campaign_id
+        description: "Platform-specific system identifier for the marketing campaign."
+        tests:
+          - not_null
+
+      - name: spend
+        description: "Total aggregated advertising spend for the campaign on this day."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: impressions
+        description: "Total aggregated ad impressions generated."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: clicks
+        description: "Total aggregated ad clicks generated."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: ctr
+        description: "Calculated Click-Through Rate (Clicks / Impressions). Insulated from zero-division errors."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: cpc
+        description: "Calculated Cost Per Click (Spend / Clicks). Insulated from zero-division errors."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: cpm
+        description: "Calculated Cost Per Mille / 1,000 Impressions ((Spend / Impressions) * 1000). Insulated from zero-division errors."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
